@@ -157,7 +157,6 @@ function calculateViewsClicks(event) {
     }
 }
 
-console.log(BusMall.all[4].name)
 function runderResult (){
     var result = document.getElementById('summary');
     for (var x = 0; x < BusMall.all.length ; x++){
