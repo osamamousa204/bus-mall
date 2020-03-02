@@ -100,18 +100,23 @@ while (leftBussImg === centerBussImg || leftBussImg === rightBussImg || centerBu
     leftimage.setAttribute('src', leftBussImg.imagepath);
     leftimage.setAttribute('alt', leftBussImg.name);
     leftimage.setAttribute('title', leftBussImg.name);
+    leftBussImg.views++;
+
 
     //center image//
 
     centerimage.setAttribute('src', centerBussImg.imagepath);
     centerimage.setAttribute('alt', centerBussImg.name);
     centerimage.setAttribute('title', centerBussImg.name);
+    centerBussImg.views++;
 
     //right image//
 
     rightimage.setAttribute('src', rightBussImg.imagepath);
     rightimage.setAttribute('alt', rightBussImg.name);
     rightimage.setAttribute('title', rightBussImg.name);
+    rightBussImg.views++;
+
 }
 
 runder();
@@ -141,8 +146,7 @@ function calculateViewsClicks(event) {
                 rightBussImg.clicks++
             }
              
-            leftBussImg.views++;
-            rightBussImg.views++;
+            
             totalClicks++;
             runder();
 
