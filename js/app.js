@@ -94,6 +94,13 @@ function runder() {
     
         }
         
+    }else if ( totalClicks === 0){
+        while (  leftBussImg === centerBussImg || leftBussImg === rightBussImg || centerBussImg === rightBussImg ){
+
+            leftBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
+            centerBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
+            rightBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
+        }
     }
     
 
