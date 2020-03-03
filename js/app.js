@@ -187,10 +187,13 @@ function setBusMallUpdattes (){
 }
 function getBusMallUpdattes (){
     var getBusMall = localStorage.getItem('theSetBusMallItem');
-    BusMall.all = JSON.parse(getBusMall);
+    if(getBusMall){
+        BusMall.all = JSON.parse(getBusMall);
         runderResult();
         runderChart();
 
+    }
+    
 }
 
 
