@@ -174,12 +174,45 @@ function calculateViewsClicks(event) {
 
     else {
         alert('you are out of attempts');
-        containerOfimages.removeEventListener('click', calculateViewsClicks)
-        runderResult();
-        runderChart();
+        containerOfimages.removeEventListener('click', calculateViewsClicks);
+        setBusMallUpdattes();
+        
 
     }
 }
+//////////////////////local storage functions\\\\\\\\\\\\\\\\\\\
+function setBusMallUpdattes (){
+    var setBusMall = JSON.stringify(BusMall.all);
+    localStorage.setItem('theSetBusMallItem',setBusMall);
+}
+function getBusMallUpdattes (){
+    var getBusMall = localStorage.getItem('theSetBusMallItem');
+    BusMall.all = JSON.parse(getBusMall);
+        runderResult();
+        runderChart();
+
+}
+
+
+getBusMallUpdattes();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 function runderResult() {
