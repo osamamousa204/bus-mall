@@ -1,4 +1,6 @@
 
+/////////////////////////The Products of the Bus mall\\\\\\\\\\\\\\\\\\\\\
+
 var names = [
     "bag.jpg",
     "banana.jpg",
@@ -22,7 +24,7 @@ var names = [
     "wine-glass.jpg"
 ];
 
-var totalClicks = 0;
+var result = document.getElementById('summary');
 //////////////the random function\\\\\\\\\\\\
 
 function getRandomNumber(min, max) {
@@ -37,22 +39,9 @@ var leftimage = document.getElementById('leftimg'),
     rightimage = document.getElementById('rightimg'),
     containerOfimages = document.getElementById('imgcontainer');
 
-//(2) add src,alt,title to the images to test if ever thing is working
-// leftimage.src = `img/${names[0]}.jpg`;
-// leftimage.alt = names[0];
-// leftimage.title = names[0];
-
-// centerimage.src = `img/${names[1]}.jpg`;
-// centerimage.alt = names[1];
-// centerimage.title = names[1];
-
-// rightimage.setAttribute('src',`img/${names[2]}.jpg`);
-// rightimage.setAttribute('alt',names[2]);
-// rightimage.setAttribute('title',names[2]);
 
 
-
-///////////////////////////(3_1) create constructor function for the buss mall\\\\\\\\\\\\\\\\\\\\\\\\\
+///////////////////////////(2) create constructor function for the buss mall\\\\\\\\\\\\\\\\\\\\\\\\\
 
 function BusMall(name) {
 
@@ -63,9 +52,10 @@ function BusMall(name) {
         BusMall.all.push(this)
 
 }
+
 BusMall.all = [];
 
-////////////////(3_2) instantiate objects for all the bussmall one shot\\\\\\\\\\\\\\\\
+////////////////(3) instantiate objects for all the bussmall one shot\\\\\\\\\\\\\\\\
 
 for (var i = 0; i < names.length; i++) {
     new BusMall(names[i]);
@@ -75,43 +65,46 @@ for (var i = 0; i < names.length; i++) {
 //////////////(4) render 3 random images\\\\\\\\\\\\\\\\\
 
 var leftBussImg, centerBussImg, rightBussImg;
-var uniqueImg = [] ;
+
+var uniqueImg = [];
+
+var totalClicks = 0;
+
 function runder() {
 
     leftBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
     centerBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
     rightBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
 
-    //////////////get a unique pic  \\\\\\\\\\\\\\\\\
+    ////////////////get a unique pic in row and subsequence\\\\\\\\\\\\\\\\\
 
-    if ( totalClicks >= 1){
-        while ( uniqueImg.includes(leftBussImg.name)  || uniqueImg.includes(centerBussImg.name) ||uniqueImg.includes(rightBussImg.name) || leftBussImg === centerBussImg || leftBussImg === rightBussImg || centerBussImg === rightBussImg ){
+    if (totalClicks >= 1) {
+        while (uniqueImg.includes(leftBussImg.name) || uniqueImg.includes(centerBussImg.name) || uniqueImg.includes(rightBussImg.name) || leftBussImg === centerBussImg || leftBussImg === rightBussImg || centerBussImg === rightBussImg) {
 
             leftBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
             centerBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
             rightBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
-           
-    
+
+
         }
-        
-    }else if ( totalClicks === 0){
-        while (  leftBussImg === centerBussImg || leftBussImg === rightBussImg || centerBussImg === rightBussImg ){
+
+    } else if (totalClicks === 0) {
+        while (leftBussImg === centerBussImg || leftBussImg === rightBussImg || centerBussImg === rightBussImg) {
 
             leftBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
             centerBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
             rightBussImg = BusMall.all[getRandomNumber(0, names.length - 1)];
         }
     }
-    
+
 
     uniqueImg[0] = leftBussImg.name;
     uniqueImg[1] = centerBussImg.name;
     uniqueImg[2] = rightBussImg.name;
 
 
-     
-    console.log(uniqueImg.includes(rightBussImg))
-    
+
+
 
     //left image//
 
@@ -143,8 +136,9 @@ runder();
 
 containerOfimages.addEventListener('click', calculateViewsClicks);
 
+var myClicks = []; 
+var myViews = [];
 
-var myClicks = [];
 function calculateViewsClicks(event) {
 
     if (totalClicks < 25) {
@@ -167,6 +161,7 @@ function calculateViewsClicks(event) {
 
             totalClicks++;
             runder();
+            
 
 
         }
@@ -175,56 +170,59 @@ function calculateViewsClicks(event) {
     else {
         alert('you are out of attempts');
         containerOfimages.removeEventListener('click', calculateViewsClicks);
+        runderResult();
+
         setBusMallUpdattes();
-        
+
 
     }
 }
-//////////////////////local storage functions\\\\\\\\\\\\\\\\\\\
-function setBusMallUpdattes (){
+
+//////////////////////(6)local storage functions\\\\\\\\\\\\\\\\\\\
+
+
+function setBusMallUpdattes() {
+
     var setBusMall = JSON.stringify(BusMall.all);
-    localStorage.setItem('theSetBusMallItem',setBusMall);
+
+    localStorage.setItem('theSetBusMallItem', setBusMall);
+
 }
-function getBusMallUpdattes (){
+
+function getBusMallUpdattes() {
+
     var getBusMall = localStorage.getItem('theSetBusMallItem');
-    if(getBusMall){
+
+    if (getBusMall) {
+
         BusMall.all = JSON.parse(getBusMall);
+
+        result.innerHTML = "";
+
         runderResult();
+
         runderChart();
 
     }
-    
+
 }
 
 
 getBusMallUpdattes();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+///////////////(7) here i am adding my list of products \\\\\\\\\\\\\\\
 
 
 
 function runderResult() {
-    var result = document.getElementById('summary');
+    
     for (var x = 0; x < BusMall.all.length; x++) {
         var li1 = document.createElement('li');
         result.appendChild(li1);
         li1.textContent = `${BusMall.all[x].name} has ${BusMall.all[x].clicks} clicks and ${BusMall.all[x].views} views`;
         myClicks[x] = BusMall.all[x].clicks;
+        myViews[x] = BusMall.all[x].views;
 
     }
 }
@@ -232,7 +230,7 @@ function runderResult() {
 
 
 
-///////////////(6) here i am adding my chart \\\\\\\\\\\\\\\
+///////////////(8) here i am adding my chart \\\\\\\\\\\\\\\
 
 function runderChart() {
     var ctx = document.getElementById('myChart').getContext('2d');
@@ -292,7 +290,60 @@ function runderChart() {
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1
-            }]
+            },
+            {
+                label: '# of views',
+                data: myViews,
+                backgroundColor: [
+                    'rgba(250, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            },]
         },
         options: {
             scales: {
